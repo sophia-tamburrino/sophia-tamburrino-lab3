@@ -1,13 +1,12 @@
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WordCounter {
-
-    public WordCounter() {
-        return;
-    }
-    public String processText(StringBuffer text, String stopword) {
+    public static String processText(StringBuffer text, String stopword) {
         //if the stopword is not found in stringBuffer, raise invalidstopwordexception
         //if it is found, count the number of words through that stopword
         //if stopword == null, method counts all words in the file
@@ -31,23 +30,41 @@ public class WordCounter {
         else if (stopword == null){
             return "" + words.size();
         }
+
         //not found in buffer, have to raise stopwordexception
-        System.out.println("");
         
         throw new InvalidStopwordException("Stopword is invalid");
+        
     }   
 
-    public String processFile(String path) {
+    public static StringBuffer processFile(String path) {
         StringBuffer buffer = new StringBuffer(path);
         //if file cannot be opened, prompt user to reenter filename until they enter a filename that can be opened
         //if file empty, raise EmptyFileException
-        throw new EmptyFileException();
+        if(path == "") {
+            throw new EmptyFileException("File is empty");
+        }
+        LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
+        String line = reader.readLine();
+        while( line != null ) {
+            Scanner sc = new Scanner(line);
+                
+            // read your tokens for whatever you need!
+            // ...
+                
+            line = reader.readLine();
+            System.out.println("You're on line " + reader.getLineNumber());      
+        }
         //return stringBuffer;
     }
     public static void main(String[] args) {
         StringBuffer newBuffer = new StringBuffer("This sentence is long enough to yellow pass this test. But, it could be -- even -- longer...");
-        WordCounter newCounter = new WordCounter();
-        newCounter.processText(newBuffer, null);
+        try {
+            processText(newBuffer, "lol");
+        } catch (InvalidStopwordException e) {
+            System.out.println(e);
+        }
+
     }
 
 }
