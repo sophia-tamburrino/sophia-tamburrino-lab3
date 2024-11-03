@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,38 +51,60 @@ public class WordCounter {
         }
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
         String line = reader.readLine();
-        System.out.println("Line: " + line + " \n");
-        if(line == null) {
+        if(line == null || line == "") {
             reader.close();
             throw new EmptyFileException(path + " was empty");
         }
         StringBuffer retVal = new StringBuffer();
         while( line != null ) {
-            System.out.println("Line: " + line + " \n");
             retVal.append(line);
-            System.out.println("Retval: " + retVal.toString() + " \n");
             line = reader.readLine();
         }
 
         //return the stringbuffer, have to close the reader to avoid leaks
+        
         reader.close();
         return retVal;
     }
-    public static void main(String[] args) {
-        // StringBuffer newBuffer = new StringBuffer("This sentence is long enough to yellow pass this test. But, it could be -- even -- longer...");
-        // try {
-        //     processText(newBuffer, "lol");
-        // } catch (InvalidStopwordException e) {
-        //     System.out.println(e);
-        // }
+    public static void main(String[] args) throws IOException, InvalidStopwordException, TooSmallText{
+        //will prompt user to enter an option 1 or option 2
+        System.out.println("Please input option 1 or 2: ");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        String answer = in.readLine();
+        System.out.println("Answer:  " + answer);
         
-        // StringBuffer bufferTwo = new StringBuffer("Only Three Words");
-        // try {
-        //     processText(bufferTwo, "");
-        // } catch (TooSmallText e) {
-        //     System.out.println(e);
-        // }
+        //if 1, process a file.
+        if(answer != null && answer != "") {
+            StringBuffer file = processFile(answer);
+            String stopword = in.readLine();
+            System.out.println("Stopword: " + answer);
+            try {
+                processText(file, stopword);
+            } catch (InvalidStopwordException e) {
+                // should recurse, ask user to input again
+                System.out.println(e);
+                System.out.println("Please a new stopword: ");
+                BufferedReader inNew = new BufferedReader(new InputStreamReader(System.in));
+                String newStopword = inNew.readLine();
+                try {
+                    processText(file, newStopword); 
+                }
+                catch (InvalidStopwordException j) {
+                    System.out.println(j);
+                    System.out.println("Failed to compute");
+                }
+                String returnVal = processText(file, newStopword);
+                System.out.println("Found " + returnVal + " words.");
+            }
 
+            String returnVal = processText(file, stopword);
+            System.out.println("Found " + returnVal + " words.");
+        }
+        //reprompt
+        // else {
+        //     //reprompt/recurse on main???
+        //     main(args);
+        // }
     }
 
 }
