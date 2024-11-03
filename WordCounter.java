@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WordCounter {
-    public static String processText(StringBuffer text, String stopword) {
+    public static String processText(StringBuffer text, String stopword) throws TooSmallText, InvalidStopwordException{
         //if the stopword is not found in stringBuffer, raise invalidstopwordexception
         //if it is found, count the number of words through that stopword
         //if stopword == null, method counts all words in the file
@@ -40,25 +40,22 @@ public class WordCounter {
         
     }   
 
-    public static StringBuffer processFile(String path) {
-        StringBuffer buffer = new StringBuffer(path);
+    public static StringBuffer processFile(String path) throws EmptyFileException{
         //if file cannot be opened, prompt user to reenter filename until they enter a filename that can be opened
         //if file empty, raise EmptyFileException
-        if(path == "") {
+        if(path == "" || path == null) {
             throw new EmptyFileException("EmptyFileException: " + path + " was empty");
         }
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
         String line = reader.readLine();
+        StringBuffer retVal = new StringBuffer();
         while( line != null ) {
-            Scanner sc = new Scanner(line);
-                
-            // read your tokens for whatever you need!
-            // ...
-                
             line = reader.readLine();
-            System.out.println("You're on line " + reader.getLineNumber());      
+            retVal.append(line);
         }
-        //return stringBuffer;
+
+        //return the stringbuffer
+        return retVal;
     }
     public static void main(String[] args) {
         StringBuffer newBuffer = new StringBuffer("This sentence is long enough to yellow pass this test. But, it could be -- even -- longer...");
@@ -74,6 +71,7 @@ public class WordCounter {
         } catch (TooSmallText e) {
             System.out.println(e);
         }
+
     }
 
 }
