@@ -23,6 +23,9 @@ public class WordCounter {
             words.add(regexMatcher.group());
         } 
         //if stopword exists
+        if(words.size() < 5) {
+            throw new TooSmallText("TooSmallText: Only found "+ words.size() + " words.");
+        }
         if(words.contains(stopword)) {
             return "" + (words.indexOf(stopword) + 1);
         }
@@ -33,7 +36,7 @@ public class WordCounter {
 
         //not found in buffer, have to raise stopwordexception
         
-        throw new InvalidStopwordException("Stopword is invalid");
+        throw new InvalidStopwordException("InvalidStopwordException: Couldn't find stopword: " + stopword);
         
     }   
 
@@ -42,7 +45,7 @@ public class WordCounter {
         //if file cannot be opened, prompt user to reenter filename until they enter a filename that can be opened
         //if file empty, raise EmptyFileException
         if(path == "") {
-            throw new EmptyFileException("File is empty");
+            throw new EmptyFileException("EmptyFileException: " + path + " was empty");
         }
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
         String line = reader.readLine();
@@ -64,7 +67,13 @@ public class WordCounter {
         } catch (InvalidStopwordException e) {
             System.out.println(e);
         }
-
+        
+        StringBuffer bufferTwo = new StringBuffer("Only Three Words");
+        try {
+            processText(bufferTwo, "");
+        } catch (TooSmallText e) {
+            System.out.println(e);
+        }
     }
 
 }
