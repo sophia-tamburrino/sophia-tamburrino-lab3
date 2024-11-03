@@ -1,4 +1,6 @@
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.*;
@@ -40,7 +42,7 @@ public class WordCounter {
         
     }   
 
-    public static StringBuffer processFile(String path) throws EmptyFileException{
+    public static StringBuffer processFile(String path) throws EmptyFileException, FileNotFoundException, IOException{
         //if file cannot be opened, prompt user to reenter filename until they enter a filename that can be opened
         //if file empty, raise EmptyFileException
         if(path == "" || path == null) {
@@ -54,23 +56,24 @@ public class WordCounter {
             retVal.append(line);
         }
 
-        //return the stringbuffer
+        //return the stringbuffer, have to close the reader to avoid leaks
+        reader.close();
         return retVal;
     }
     public static void main(String[] args) {
-        StringBuffer newBuffer = new StringBuffer("This sentence is long enough to yellow pass this test. But, it could be -- even -- longer...");
-        try {
-            processText(newBuffer, "lol");
-        } catch (InvalidStopwordException e) {
-            System.out.println(e);
-        }
+        // StringBuffer newBuffer = new StringBuffer("This sentence is long enough to yellow pass this test. But, it could be -- even -- longer...");
+        // try {
+        //     processText(newBuffer, "lol");
+        // } catch (InvalidStopwordException e) {
+        //     System.out.println(e);
+        // }
         
-        StringBuffer bufferTwo = new StringBuffer("Only Three Words");
-        try {
-            processText(bufferTwo, "");
-        } catch (TooSmallText e) {
-            System.out.println(e);
-        }
+        // StringBuffer bufferTwo = new StringBuffer("Only Three Words");
+        // try {
+        //     processText(bufferTwo, "");
+        // } catch (TooSmallText e) {
+        //     System.out.println(e);
+        // }
 
     }
 
