@@ -50,10 +50,17 @@ public class WordCounter {
         }
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
         String line = reader.readLine();
+        System.out.println("Line: " + line + " \n");
+        if(line == null) {
+            reader.close();
+            throw new EmptyFileException(path + " was empty");
+        }
         StringBuffer retVal = new StringBuffer();
         while( line != null ) {
-            line = reader.readLine();
+            System.out.println("Line: " + line + " \n");
             retVal.append(line);
+            System.out.println("Retval: " + retVal.toString() + " \n");
+            line = reader.readLine();
         }
 
         //return the stringbuffer, have to close the reader to avoid leaks
