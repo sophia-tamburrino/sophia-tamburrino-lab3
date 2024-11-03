@@ -26,7 +26,7 @@ public class WordCounter {
         } 
         //if stopword exists
         if(words.size() < 5) {
-            throw new TooSmallText("TooSmallText: Only found "+ words.size() + " words.");
+            throw new TooSmallText("Only found "+ words.size() + " words.");
         }
         if(words.contains(stopword)) {
             return "" + (words.indexOf(stopword) + 1);
@@ -38,7 +38,7 @@ public class WordCounter {
 
         //not found in buffer, have to raise stopwordexception
         
-        throw new InvalidStopwordException("InvalidStopwordException: Couldn't find stopword: " + stopword);
+        throw new InvalidStopwordException("Couldn't find stopword: " + stopword);
         
     }   
 
@@ -46,7 +46,7 @@ public class WordCounter {
         //if file cannot be opened, prompt user to reenter filename until they enter a filename that can be opened
         //if file empty, raise EmptyFileException
         if(path == "" || path == null) {
-            throw new EmptyFileException("EmptyFileException: " + path + " was empty");
+            throw new EmptyFileException(path + " was empty");
         }
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
         String line = reader.readLine();

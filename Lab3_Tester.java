@@ -69,6 +69,9 @@ public class Lab3_Tester {
     } catch (InvalidStopwordException e){
       result = e.toString();
     } catch (Exception e) {}
+    System.out.println("Expected: " + expected);
+    System.out.println("Result: " + result);
+
     assertEquals(expected, result);
   }
 
