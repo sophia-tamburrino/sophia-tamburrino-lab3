@@ -15,7 +15,7 @@ public class WordCounter {
         // if stopword == null, method counts all words in the file
         // COUNTS THE STOPWORD AS A WORD
         // if it doesn't have at least 1 character in the string, don't include it
-
+        
         String buffer = text.toString();
         Pattern regex = Pattern.compile("[a-zA-Z]+");
         Matcher regexMatcher = regex.matcher(buffer);
@@ -102,13 +102,18 @@ public class WordCounter {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String answer = in.readLine();
         // System.out.println("Answer: " + answer);
+        if(!answer.equals("1") && !answer.equals("2")) {
+            System.out.println("Invalid input. Enter again: ");
+            BufferedReader inTwo = new BufferedReader(new InputStreamReader(System.in));
+            answer = inTwo.readLine();
+        }
 
         // ARGS[] is the command line input!
         if (answer.equals("1")) {
             // System.out.println("reaches here");
             // means there is a stopword
             String stopword = null;
-            if (args.length == 2) {
+            if (args.length >= 2) {
                 stopword = args[1];
             }
 
@@ -117,8 +122,13 @@ public class WordCounter {
             } catch (EmptyFileException e) {
                 // TODO: handle exception
                 // if this is caught by main, pass through an empty text.
-                //System.out.println(e);
+                System.out.println(e);
                 StringBuffer temp = new StringBuffer("");
+                if(stopword == null) {
+                    //reenter stopword
+                    BufferedReader inTwo = new BufferedReader(new InputStreamReader(System.in));
+                    stopword = inTwo.readLine();
+                }
                 try {
                     processText(temp, stopword);
                 } catch (TooSmallText j) {
@@ -138,14 +148,38 @@ public class WordCounter {
 
             String numWords = processText(file, stopword);
             System.out.println("Found " + numWords + " words.");
-        } else if (answer.equals("2")) {
-            
+        } 
+        else if (answer.equals("2")) {
+            StringBuffer buff = new StringBuffer(args[0]);
+            String[] words = args[0].split(" ");
+            if(words.length < 5) {
+                System.out.println("WARNING: Text too short");
+            }
+            String stopword = null;
+            if (args.length == 2) {
+                stopword = args[1];
+            }
+            try {
+                processText(buff, stopword);
+            } catch (TooSmallText e) {
+                // TODO: handle exception
+                System.out.println(e);
+            }
+            try {
+                processText(buff, stopword);
+            } catch (InvalidStopwordException e) {
+                // TODO: handle exception
+                System.out.println(e);
+            }
+
+            String numWords = processText(buff, stopword);
+            System.out.println("Found " + numWords + " words.");
         }
         // reprompt
         else {
-            System.out.println("False, please re-enter a correct value.");
             main(args);
         }
+     
 
     }
 
