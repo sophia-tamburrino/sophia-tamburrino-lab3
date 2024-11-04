@@ -25,7 +25,6 @@ public class WordCounter {
             // This works
             words.add(regexMatcher.group());
         }
-        // if stopword exists
         if (words.size() < 5) {
             throw new TooSmallText("Only found " + words.size() + " words.");
         }
@@ -51,7 +50,35 @@ public class WordCounter {
         if (path == "" || path == null) {
             throw new EmptyFileException(path + " was empty");
         }
+        
+        try {
+            LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
+        } catch (FileNotFoundException e) {
+            // TODO: handle exception
+            //reenter the file name
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            String answer = in.readLine();
+            LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(answer)));
+            String line = reader.readLine();
+            if (line == null || line == "") {
+                reader.close();
+                throw new EmptyFileException(path + " was empty");
+            }
+            StringBuffer retVal = new StringBuffer();
+            while (line != null) {
+                retVal.append(line);
+                line = reader.readLine();
+            }
+
+        // return the stringbuffer, have to close the reader to avoid leaks
+
+            reader.close();
+            return retVal;
+        }
+
+
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
+        
         String line = reader.readLine();
         if (line == null || line == "") {
             reader.close();
@@ -90,6 +117,12 @@ public class WordCounter {
                 // TODO: handle exception
                 System.out.println(e);
             }
+            try {
+                processFile(args[0]);
+            } catch (FileNotFoundException e) {
+                // TODO: handle exception
+                System.out.println(e);
+            }
             StringBuffer file = processFile(args[0]);
             
             try {
@@ -103,6 +136,10 @@ public class WordCounter {
             System.out.println("Found " + numWords + " words.");
         }
         else if (answer.equals("2")) {
+
+        }
+        //reprompt
+        else {
 
         }
 

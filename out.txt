@@ -4,8 +4,8 @@ Stopword is null!
 Found 9 words.
 EmptyFileException: file1.txt was empty
 EmptyFileException: file1.txt was empty
-	at WordCounter.processFile(WordCounter.java:58)
-	at WordCounter.main(WordCounter.java:93)
+	at WordCounter.processFile(WordCounter.java:85)
+	at WordCounter.main(WordCounter.java:121)
 	at Lab3_Tester.test13(Lab3_Tester.java:327)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -43,8 +43,8 @@ EmptyFileException: file1.txt was empty
 test main valid number choice 1 empty file
 TooSmallText: Only found 2 words.
 TooSmallText: Only found 2 words.
-	at WordCounter.processText(WordCounter.java:30)
-	at WordCounter.main(WordCounter.java:102)
+	at WordCounter.processText(WordCounter.java:29)
+	at WordCounter.main(WordCounter.java:135)
 	at Lab3_Tester.test14(Lab3_Tester.java:378)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
