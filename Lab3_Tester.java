@@ -314,7 +314,7 @@ public class Lab3_Tester {
             f1.delete();
         }
         output = new PrintStream(new FileOutputStream("out.txt",true));
-        System.setOut(output); // Redirecting console output to file ERROR IS HERE
+        System.setOut(output); // Redirecting console output to file
         System.setErr(output);// Redirecting runtime exceptions to file
       }
       catch (Exception e)
@@ -322,10 +322,12 @@ public class Lab3_Tester {
         System.out.println("error in output redirection");
         e.printStackTrace();
       }
+
       String[] args = {"file1.txt"};
       WordCounter.main(args);
       System.setOut(sysOutBackup); // optionally, reset System.in to its original
       System.setIn(sysInBackup); // optionally, reset System.in to its original
+      result = getFileContents("out.txt");
       System.out.println("this is what we got from main:\n" + result);
       
     } catch (Exception e){
@@ -333,6 +335,7 @@ public class Lab3_Tester {
       e.printStackTrace();
     } 
 
+    System.out.println("Result: " + result);
     String expected = "TooSmallText: Only found 0 words.";
     assertEquals(expected, result);
   }

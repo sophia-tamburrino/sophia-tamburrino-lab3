@@ -1,13 +1,11 @@
 Found 5 words.
-Stopword is null!
-Stopword is null!
 Found 9 words.
 EmptyFileException: file1.txt was empty
 TooSmallText: Only found 0 words.
 EmptyFileException: file1.txt was empty
-	at WordCounter.processFile(WordCounter.java:85)
-	at WordCounter.main(WordCounter.java:140)
-	at Lab3_Tester.test13(Lab3_Tester.java:326)
+	at WordCounter.processFile(WordCounter.java:83)
+	at WordCounter.main(WordCounter.java:143)
+	at Lab3_Tester.test13(Lab3_Tester.java:327)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -41,12 +39,13 @@ EmptyFileException: file1.txt was empty
 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
 	at org.junit.runner.JUnitCore.runMain(JUnitCore.java:77)
 	at org.junit.runner.JUnitCore.main(JUnitCore.java:36)
+Result: error
 test main valid number choice 1 empty file
 TooSmallText: Only found 2 words.
 TooSmallText: Only found 2 words.
 	at WordCounter.processText(WordCounter.java:29)
-	at WordCounter.main(WordCounter.java:149)
-	at Lab3_Tester.test14(Lab3_Tester.java:376)
+	at WordCounter.main(WordCounter.java:152)
+	at Lab3_Tester.test14(Lab3_Tester.java:379)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -82,7 +81,6 @@ TooSmallText: Only found 2 words.
 	at org.junit.runner.JUnitCore.main(JUnitCore.java:36)
 process long text with found stopword
 process long text with no stopword
-Stopword is null!
 process long text with missing stopword
 process short text with found stopword
 process short text with missing stopword
@@ -90,3 +88,4 @@ process short text with found stopword
 process easy long text with end stopword
 process found file
 process missing file
+java.io.FileNotFoundException: invalid.txt (The system cannot find the file specified)
