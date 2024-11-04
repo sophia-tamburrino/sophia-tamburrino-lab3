@@ -34,6 +34,7 @@ public class WordCounter {
         }
         // if its null
         else if (stopword == null) {
+            System.out.println("Stopword is null!");
             return "" + words.size();
         }
 
@@ -78,6 +79,11 @@ public class WordCounter {
         // ARGS[] is the command line input!
         if (answer.equals("1")) {
             // System.out.println("reaches here");
+            //means there is a stopword
+            String stopword = null;
+            if(args.length == 2) {
+                stopword = args[1];
+            }
             try {
                 processFile(args[0]);
             } catch (EmptyFileException e) {
@@ -85,59 +91,22 @@ public class WordCounter {
                 System.out.println(e);
             }
             StringBuffer file = processFile(args[0]);
-            // stopword cannot be invalid here because I am manually inputting ""
+            
             try {
-                processText(file, null);
+                processText(file, stopword);
             } catch (TooSmallText e) {
                 // TODO: handle exception
                 System.out.println(e);
             }
 
-            String numWords = processText(file, null);
+            String numWords = processText(file, stopword);
             System.out.println("Found " + numWords + " words.");
         }
-        // else if (answer == "2") {
-        // //if there is a second command line input (stopword)
-        // if(args.length == 2) {
-        // String stopword = args[1];
-        // }
+        else if (answer.equals("2")) {
 
-        // }
-        // INVALID ANSWER
-        // else {
+        }
 
-        // }
-        // if 1, process a file.
-        // if (answer != null && answer != "") {
-        // StringBuffer file = processFile(answer);
-        // String stopword = in.readLine();
-        // System.out.println("Stopword: " + answer);
-        // try {
-        // processText(file, stopword);
-        // } catch (InvalidStopwordException e) {
-        // // should recurse, ask user to input again
-        // System.out.println(e);
-        // System.out.println("Please a new stopword: ");
-        // BufferedReader inNew = new BufferedReader(new InputStreamReader(System.in));
-        // String newStopword = inNew.readLine();
-        // try {
-        // processText(file, newStopword);
-        // } catch (InvalidStopwordException j) {
-        // System.out.println(j);
-        // System.out.println("Failed to compute");
-        // }
-        // String returnVal = processText(file, newStopword);
-        // System.out.println("Found " + returnVal + " words.");
-        // }
-
-        // String returnVal = processText(file, stopword);
-        // System.out.println("Found " + returnVal + " words.");
-        // }
-        // // reprompt
-        // else {
-        // //reprompt/recurse on main???
-        // main(args);
-        // }
+ 
     }
 
 }
