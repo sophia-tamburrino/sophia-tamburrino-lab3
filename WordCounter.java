@@ -93,13 +93,12 @@ public class WordCounter {
         return retVal;
     }
 
-    public static String prompter() throws IOException {
+    public static String prompter() throws IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String answer = in.readLine();
         return answer;
     }
-
-    public static void main(String[] args) throws IOException, InvalidStopwordException, TooSmallText {
+    public static void main(String[] args) throws IOException, InvalidStopwordException, TooSmallText, EmptyFileException {
         // will prompt user to enter an option 1 or option 2
         // System.out.println("Please input option 1 or 2: ");
         // BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
