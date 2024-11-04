@@ -50,12 +50,13 @@ public class WordCounter {
         if (path == "" || path == null) {
             throw new EmptyFileException(path + " was empty");
         }
-        
+
         try {
             LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
+            reader.close();
         } catch (FileNotFoundException e) {
             // TODO: handle exception
-            //reenter the file name
+            // reenter the file name
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             String answer = in.readLine();
             LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(answer)));
@@ -70,15 +71,14 @@ public class WordCounter {
                 line = reader.readLine();
             }
 
-        // return the stringbuffer, have to close the reader to avoid leaks
+            // return the stringbuffer, have to close the reader to avoid leaks
 
             reader.close();
             return retVal;
         }
 
-
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(path)));
-        
+
         String line = reader.readLine();
         if (line == null || line == "") {
             reader.close();
@@ -91,7 +91,6 @@ public class WordCounter {
         }
 
         // return the stringbuffer, have to close the reader to avoid leaks
-
         reader.close();
         return retVal;
     }
@@ -99,6 +98,7 @@ public class WordCounter {
     public static void main(String[] args) throws IOException, InvalidStopwordException, TooSmallText {
         // will prompt user to enter an option 1 or option 2
         // System.out.println("Please input option 1 or 2: ");
+        
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String answer = in.readLine();
         // System.out.println("Answer: " + answer);
@@ -106,25 +106,29 @@ public class WordCounter {
         // ARGS[] is the command line input!
         if (answer.equals("1")) {
             // System.out.println("reaches here");
-            //means there is a stopword
+            // means there is a stopword
             String stopword = null;
-            if(args.length == 2) {
+            if (args.length == 2) {
                 stopword = args[1];
             }
+
             try {
                 processFile(args[0]);
             } catch (EmptyFileException e) {
                 // TODO: handle exception
-                System.out.println(e);
+                // if this is caught by main, pass through an empty text.
+                //System.out.println(e);
+                StringBuffer temp = new StringBuffer("");
+                try {
+                    processText(temp, stopword);
+                } catch (TooSmallText j) {
+                    // TODO: handle exception
+                    System.out.println(j);
+                }
             }
-            try {
-                processFile(args[0]);
-            } catch (FileNotFoundException e) {
-                // TODO: handle exception
-                System.out.println(e);
-            }
+
             StringBuffer file = processFile(args[0]);
-            
+
             try {
                 processText(file, stopword);
             } catch (TooSmallText e) {
@@ -134,16 +138,15 @@ public class WordCounter {
 
             String numWords = processText(file, stopword);
             System.out.println("Found " + numWords + " words.");
+        } else if (answer.equals("2")) {
+            
         }
-        else if (answer.equals("2")) {
-
-        }
-        //reprompt
+        // reprompt
         else {
-
+            System.out.println("False, please re-enter a correct value.");
+            main(args);
         }
 
- 
     }
 
 }
